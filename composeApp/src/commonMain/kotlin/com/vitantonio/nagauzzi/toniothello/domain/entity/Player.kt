@@ -1,4 +1,4 @@
-package com.vitantonio.nagauzzi.toniothello.ui.state
+package com.vitantonio.nagauzzi.toniothello.domain.entity
 
 enum class Player {
     BLACK,

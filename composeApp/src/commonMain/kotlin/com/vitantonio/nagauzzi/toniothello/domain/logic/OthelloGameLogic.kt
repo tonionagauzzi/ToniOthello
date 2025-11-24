@@ -1,8 +1,8 @@
 package com.vitantonio.nagauzzi.toniothello.domain.logic
 
-import com.vitantonio.nagauzzi.toniothello.ui.state.CellState
-import com.vitantonio.nagauzzi.toniothello.ui.state.Player
-import com.vitantonio.nagauzzi.toniothello.ui.state.opponent
+import com.vitantonio.nagauzzi.toniothello.domain.entity.CellState
+import com.vitantonio.nagauzzi.toniothello.domain.entity.Player
+import com.vitantonio.nagauzzi.toniothello.domain.entity.opponent
 
 object OthelloGameLogic {
     private val DIRECTIONS = listOf(

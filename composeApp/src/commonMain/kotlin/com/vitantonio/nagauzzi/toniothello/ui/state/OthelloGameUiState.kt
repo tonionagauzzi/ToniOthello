@@ -1,5 +1,8 @@
 package com.vitantonio.nagauzzi.toniothello.ui.state
 
+import com.vitantonio.nagauzzi.toniothello.domain.entity.CellState
+import com.vitantonio.nagauzzi.toniothello.domain.entity.Language
+import com.vitantonio.nagauzzi.toniothello.domain.entity.Player
 import com.vitantonio.nagauzzi.toniothello.platform.getSystemLanguage
 
 data class OthelloGameUiState(

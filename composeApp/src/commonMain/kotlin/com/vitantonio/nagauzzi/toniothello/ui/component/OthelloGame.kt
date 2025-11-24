@@ -22,8 +22,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.toniothello.domain.logic.OthelloGameLogic
-import com.vitantonio.nagauzzi.toniothello.ui.state.Player
-import com.vitantonio.nagauzzi.toniothello.ui.state.opponent
+import com.vitantonio.nagauzzi.toniothello.domain.entity.Player
+import com.vitantonio.nagauzzi.toniothello.domain.entity.opponent
 import org.jetbrains.compose.resources.stringResource
 import toniothello.composeapp.generated.resources.Res
 import toniothello.composeapp.generated.resources.new_game

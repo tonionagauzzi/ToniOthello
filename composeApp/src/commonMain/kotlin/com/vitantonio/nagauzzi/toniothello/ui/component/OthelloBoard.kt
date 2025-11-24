@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.vitantonio.nagauzzi.toniothello.ui.state.CellState
+import com.vitantonio.nagauzzi.toniothello.domain.entity.CellState
 
 @Composable
 fun OthelloBoard(
