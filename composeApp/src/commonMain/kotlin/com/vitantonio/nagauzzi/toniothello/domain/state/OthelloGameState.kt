@@ -36,7 +36,7 @@ data class OthelloGameState(
                 this[3][4] = Cell.BLACK
                 this[4][3] = Cell.BLACK
                 this[4][4] = Cell.WHITE
-            }
+            }.map { it.toList() }
             return OthelloGameState(
                 board = board,
                 currentPlayer = Player.BLACK

@@ -41,7 +41,7 @@ fun makeMove(
 
     // Update state
     val newState = state.copy(
-        board = newBoard,
+        board = newBoard.map { it.toList() },
         currentPlayer = nextPlayer
     )
 
