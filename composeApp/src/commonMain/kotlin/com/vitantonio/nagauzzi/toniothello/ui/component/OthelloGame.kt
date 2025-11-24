@@ -1,3 +1,5 @@
+package com.vitantonio.nagauzzi.toniothello.ui.component
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,9 +16,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.vitantonio.nagauzzi.toniothello.ui.component.CellState
-import com.vitantonio.nagauzzi.toniothello.ui.component.Language
-import com.vitantonio.nagauzzi.toniothello.ui.component.Player
 
 @Composable
 fun OthelloGame(language: Language) {

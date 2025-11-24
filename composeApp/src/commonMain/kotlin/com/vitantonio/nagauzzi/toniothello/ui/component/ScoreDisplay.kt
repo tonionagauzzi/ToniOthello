@@ -1,3 +1,5 @@
+package com.vitantonio.nagauzzi.toniothello.ui.component
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -15,7 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.vitantonio.nagauzzi.toniothello.ui.component.Language
 
 @Composable
 fun ScoreDisplay(label: String, score: Int, color: Color, language: Language) {

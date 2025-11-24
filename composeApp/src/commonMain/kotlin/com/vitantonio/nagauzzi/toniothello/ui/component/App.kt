@@ -1,6 +1,5 @@
 package com.vitantonio.nagauzzi.toniothello.ui.component
 
-import OthelloGame
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
