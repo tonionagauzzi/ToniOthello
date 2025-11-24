@@ -4,7 +4,7 @@ import com.vitantonio.nagauzzi.toniothello.domain.entity.Cell
 import com.vitantonio.nagauzzi.toniothello.domain.entity.Player
 
 data class OthelloGameState(
-    val board: Array<Array<Cell>>,
+    val board: List<List<Cell>>,
     val currentPlayer: Player,
     val isGameOver: Boolean = false
 ) {
@@ -28,36 +28,17 @@ data class OthelloGameState(
             }
         }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other == null || this::class != other::class) return false
-
-        other as OthelloGameState
-
-        if (!board.contentDeepEquals(other.board)) return false
-        if (currentPlayer != other.currentPlayer) return false
-        if (isGameOver != other.isGameOver) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = board.contentDeepHashCode()
-        result = 31 * result + currentPlayer.hashCode()
-        result = 31 * result + isGameOver.hashCode()
-        return result
-    }
-
     companion object {
         fun initial(): OthelloGameState {
+            val board = List(8) { MutableList(8) { Cell.EMPTY } }.apply {
+                // Initial Othello setup
+                this[3][3] = Cell.WHITE
+                this[3][4] = Cell.BLACK
+                this[4][3] = Cell.BLACK
+                this[4][4] = Cell.WHITE
+            }
             return OthelloGameState(
-                board = Array(8) { Array(8) { Cell.EMPTY } }.apply {
-                    // Initial Othello setup
-                    this[3][3] = Cell.WHITE
-                    this[3][4] = Cell.BLACK
-                    this[4][3] = Cell.BLACK
-                    this[4][4] = Cell.WHITE
-                },
+                board = board,
                 currentPlayer = Player.BLACK
             )
         }

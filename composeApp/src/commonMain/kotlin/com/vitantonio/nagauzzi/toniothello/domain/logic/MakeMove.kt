@@ -27,7 +27,7 @@ fun makeMove(
     }
 
     // Create the new board for the next state
-    val newBoard = Array(size = 8) { r -> Array(size = 8) { c -> state.board[r][c] } }
+    val newBoard = List(8) { r -> MutableList(8) { c -> state.board[r][c] } }
     val playerCell = currentPlayer.cell
 
     // Place the new piece

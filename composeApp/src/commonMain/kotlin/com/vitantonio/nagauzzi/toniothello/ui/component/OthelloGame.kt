@@ -72,7 +72,8 @@ fun OthelloGame() {
                         val newGameState = makeMove(state = uiState.gameState, row = row, col = col)
                         uiState = uiState.copy(gameState = newGameState)
                     }
-                }
+                },
+                enabled = !uiState.gameState.isGameOver
             )
 
             Spacer(modifier = Modifier.height(16.dp))

@@ -21,14 +21,15 @@ import com.vitantonio.nagauzzi.toniothello.domain.entity.Cell
 fun BoardCell(
     state: Cell,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true
 ) {
     Box(
         modifier = modifier
             .aspectRatio(1f)
             .padding(2.dp)
             .border(BorderStroke(1.dp, Color.Black))
-            .clickable(onClick = onClick),
+            .clickable(enabled = enabled, onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
         when (state) {

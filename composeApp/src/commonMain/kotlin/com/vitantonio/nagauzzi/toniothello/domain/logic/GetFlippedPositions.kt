@@ -25,7 +25,7 @@ private val DIRECTIONS = listOf(
  * @return A list of positions (row, col) that would be flipped.
  */
 fun getFlippedPositions(
-    board: Array<Array<Cell>>,
+    board: List<List<Cell>>,
     row: Int,
     col: Int,
     player: Player
