@@ -1,8 +1,8 @@
 package com.vitantonio.nagauzzi.toniothello.domain.entity
 
-enum class Player {
-    BLACK,
-    WHITE
+enum class Player(val cell: Cell) {
+    BLACK(cell = Cell.BLACK),
+    WHITE(cell = Cell.WHITE);
 }
 
 /**
@@ -11,12 +11,4 @@ enum class Player {
 fun Player.opponent(): Player = when (this) {
     Player.BLACK -> Player.WHITE
     Player.WHITE -> Player.BLACK
-}
-
-/**
- * Converts Player to corresponding CellState.
- */
-fun Player.toCellState(): CellState = when (this) {
-    Player.BLACK -> CellState.BLACK
-    Player.WHITE -> CellState.WHITE
 }

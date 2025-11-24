@@ -1,9 +1,8 @@
 package com.vitantonio.nagauzzi.toniothello.domain.logic
 
-import com.vitantonio.nagauzzi.toniothello.domain.entity.CellState
+import com.vitantonio.nagauzzi.toniothello.domain.entity.Cell
 import com.vitantonio.nagauzzi.toniothello.domain.entity.Player
 import com.vitantonio.nagauzzi.toniothello.domain.entity.opponent
-import com.vitantonio.nagauzzi.toniothello.domain.entity.toCellState
 
 private val DIRECTIONS = listOf(
     // Top-left, Top, Top-right
@@ -26,13 +25,13 @@ private val DIRECTIONS = listOf(
  * @return A list of positions (row, col) that would be flipped.
  */
 fun getFlippedPositions(
-    board: Array<Array<CellState>>,
+    board: Array<Array<Cell>>,
     row: Int,
     col: Int,
     player: Player
 ): List<Pair<Int, Int>> {
-    val playerCell = player.toCellState()
-    val opponentCell = player.opponent().toCellState()
+    val playerCell = player.cell
+    val opponentCell = player.opponent().cell
     val flippedPositions = mutableListOf<Pair<Int, Int>>()
 
     for ((dr, dc) in DIRECTIONS) {

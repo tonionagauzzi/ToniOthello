@@ -1,6 +1,6 @@
 package com.vitantonio.nagauzzi.toniothello.domain.entity
 
-enum class CellState {
+enum class Cell {
     EMPTY,
     BLACK,
     WHITE

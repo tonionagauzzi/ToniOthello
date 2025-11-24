@@ -15,11 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.vitantonio.nagauzzi.toniothello.domain.entity.CellState
+import com.vitantonio.nagauzzi.toniothello.domain.entity.Cell
 
 @Composable
 fun BoardCell(
-    state: CellState,
+    state: Cell,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -32,7 +32,7 @@ fun BoardCell(
         contentAlignment = Alignment.Center
     ) {
         when (state) {
-            CellState.BLACK -> {
+            Cell.BLACK -> {
                 Box(
                     modifier = Modifier
                         .fillMaxSize(0.8f)
@@ -42,7 +42,7 @@ fun BoardCell(
                 )
             }
 
-            CellState.WHITE -> {
+            Cell.WHITE -> {
                 Box(
                     modifier = Modifier
                         .fillMaxSize(0.8f)
@@ -52,7 +52,7 @@ fun BoardCell(
                 )
             }
 
-            CellState.EMPTY -> {
+            Cell.EMPTY -> {
                 // Empty cell - no piece
             }
         }

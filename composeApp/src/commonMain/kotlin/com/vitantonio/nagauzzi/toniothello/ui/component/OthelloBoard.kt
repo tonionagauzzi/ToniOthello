@@ -11,11 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.vitantonio.nagauzzi.toniothello.domain.entity.CellState
+import com.vitantonio.nagauzzi.toniothello.domain.entity.Cell
 
 @Composable
 fun OthelloBoard(
-    board: Array<Array<CellState>>,
+    board: Array<Array<Cell>>,
     onCellClick: (Int, Int) -> Unit
 ) {
     Card(

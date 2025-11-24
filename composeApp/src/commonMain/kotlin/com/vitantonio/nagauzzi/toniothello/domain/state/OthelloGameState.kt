@@ -1,6 +1,6 @@
 package com.vitantonio.nagauzzi.toniothello.domain.state
 
-import com.vitantonio.nagauzzi.toniothello.domain.entity.CellState
+import com.vitantonio.nagauzzi.toniothello.domain.entity.Cell
 import com.vitantonio.nagauzzi.toniothello.domain.entity.Language
 import com.vitantonio.nagauzzi.toniothello.domain.entity.Player
 import com.vitantonio.nagauzzi.toniothello.domain.logic.getFlippedPositions
@@ -8,22 +8,22 @@ import com.vitantonio.nagauzzi.toniothello.platform.getSystemLanguage
 
 data class OthelloGameState(
     val language: Language,
-    val board: Array<Array<CellState>>,
+    val board: Array<Array<Cell>>,
     val currentPlayer: Player
 ) {
     // Calculate scores from board state
     val blackScore: Int
-        get() = board.sumOf { row -> row.count { it == CellState.BLACK } }
+        get() = board.sumOf { row -> row.count { it == Cell.BLACK } }
 
     val whiteScore: Int
-        get() = board.sumOf { row -> row.count { it == CellState.WHITE } }
+        get() = board.sumOf { row -> row.count { it == Cell.WHITE } }
 
     /**
      * Checks if a move is valid for the given player at the specified position.
      */
     fun isValidMove(row: Int, col: Int, player: Player): Boolean {
         if (row !in 0..7 || col !in 0..7) return false
-        if (board[row][col] != CellState.EMPTY) return false
+        if (board[row][col] != Cell.EMPTY) return false
 
         return getFlippedPositions(board, row, col, player).isNotEmpty()
     }
@@ -51,8 +51,8 @@ data class OthelloGameState(
      * Returns the winning player, or null if it's a draw.
      */
     fun getWinner(): Player? {
-        val blackCount = board.sumOf { row -> row.count { it == CellState.BLACK } }
-        val whiteCount = board.sumOf { row -> row.count { it == CellState.WHITE } }
+        val blackCount = board.sumOf { row -> row.count { it == Cell.BLACK } }
+        val whiteCount = board.sumOf { row -> row.count { it == Cell.WHITE } }
 
         return when {
             blackCount > whiteCount -> Player.BLACK
@@ -90,12 +90,12 @@ data class OthelloGameState(
             }
             return OthelloGameState(
                 language = language,
-                board = Array(8) { Array(8) { CellState.EMPTY } }.apply {
+                board = Array(8) { Array(8) { Cell.EMPTY } }.apply {
                     // Initial Othello setup
-                    this[3][3] = CellState.WHITE
-                    this[3][4] = CellState.BLACK
-                    this[4][3] = CellState.BLACK
-                    this[4][4] = CellState.WHITE
+                    this[3][3] = Cell.WHITE
+                    this[3][4] = Cell.BLACK
+                    this[4][3] = Cell.BLACK
+                    this[4][4] = Cell.WHITE
                 },
                 currentPlayer = Player.BLACK
             )
