@@ -1,8 +1,8 @@
 package com.vitantonio.nagauzzi.toniothello.domain.entity
 
 enum class Player(val cell: Cell) {
-    BLACK(cell = Cell.BLACK),
-    WHITE(cell = Cell.WHITE);
+    BLACK(Cell.BLACK),
+    WHITE(Cell.WHITE);
 }
 
 /**

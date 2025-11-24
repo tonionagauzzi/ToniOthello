@@ -27,7 +27,7 @@ fun GameOverEffect(
     )
     val drawMessage = stringResource(resource = Res.string.draw)
 
-    LaunchedEffect(state.board, state.currentPlayer) {
+    LaunchedEffect(state.isGameOver) {
         if (state.isGameOver) {
             val message = when (state.winner) {
                 Player.BLACK -> blackWinsMessage

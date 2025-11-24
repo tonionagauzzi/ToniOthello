@@ -67,9 +67,11 @@ fun OthelloGame() {
             OthelloBoard(
                 board = uiState.gameState.board,
                 onCellClick = { row, col ->
-                    // Use game logic to make a move
-                    val newGameState = makeMove(state = uiState.gameState, row = row, col = col)
-                    uiState = uiState.copy(gameState = newGameState)
+                    if (!uiState.gameState.isGameOver) {
+                        // Use game logic to make a move
+                        val newGameState = makeMove(state = uiState.gameState, row = row, col = col)
+                        uiState = uiState.copy(gameState = newGameState)
+                    }
                 }
             )
 

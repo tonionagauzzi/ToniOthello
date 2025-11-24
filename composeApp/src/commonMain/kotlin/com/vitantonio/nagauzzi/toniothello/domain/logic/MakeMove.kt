@@ -45,13 +45,12 @@ fun makeMove(
         currentPlayer = nextPlayer
     )
 
-    // If the next player has no valid moves, skip their turn
+    // Check if the next player has valid moves
     val nextPlayerMoves = newState.getValidMoves(nextPlayer)
     if (nextPlayerMoves.isEmpty()) {
-        // Check if the current player can continue
+        // Next player has no moves - check if current player can continue
         val currentPlayerMoves = newState.getValidMoves(currentPlayer)
-        // Neither player has valid moves - game over
-        // Next player has no moves, but current player does - skip turn
+        // If neither player has valid moves, game over; otherwise skip next player's turn
         return newState.copy(
             currentPlayer = currentPlayer,
             isGameOver = currentPlayerMoves.isEmpty()
