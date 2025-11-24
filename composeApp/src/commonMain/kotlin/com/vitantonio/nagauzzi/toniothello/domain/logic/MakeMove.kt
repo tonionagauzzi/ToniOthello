@@ -136,3 +136,24 @@ private fun OthelloGameState.getValidMoves(player: Player): List<Pair<Int, Int>>
     }
     return validMoves
 }
+
+/**
+ * Gets all valid moves for the current player with the number of pieces that would be flipped.
+ * Returns a list of triples: (row, col, flippedCount)
+ */
+fun OthelloGameState.getValidMovesWithFlipCount(): List<Triple<Int, Int, Int>> {
+    val validMoves = mutableListOf<Triple<Int, Int, Int>>()
+    for (row in 0..7) {
+        for (col in 0..7) {
+            // Skip non-empty cells
+            if (board[row][col] != Cell.EMPTY) continue
+
+            // Call getFlippedPositions once and reuse the result
+            val flippedPositions = getFlippedPositions(board, row, col, currentPlayer)
+            if (flippedPositions.isNotEmpty()) {
+                validMoves.add(Triple(row, col, flippedPositions.size))
+            }
+        }
+    }
+    return validMoves
+}
