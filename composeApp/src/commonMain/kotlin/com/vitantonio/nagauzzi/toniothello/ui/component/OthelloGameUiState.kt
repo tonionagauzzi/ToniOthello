@@ -1,5 +1,7 @@
 package com.vitantonio.nagauzzi.toniothello.ui.component
 
+import com.vitantonio.nagauzzi.toniothello.platform.getSystemLanguage
+
 data class OthelloGameUiState(
     val language: Language,
     val board: Array<Array<CellState>>,
@@ -33,7 +35,12 @@ data class OthelloGameUiState(
     }
 
     companion object {
-        fun initial(language: Language): OthelloGameUiState {
+        fun initial(): OthelloGameUiState {
+            val language = if (getSystemLanguage().startsWith("ja")) {
+                Language.JAPANESE
+            } else {
+                Language.ENGLISH
+            }
             return OthelloGameUiState(
                 language = language,
                 board = Array(8) { Array(8) { CellState.EMPTY } }.apply {

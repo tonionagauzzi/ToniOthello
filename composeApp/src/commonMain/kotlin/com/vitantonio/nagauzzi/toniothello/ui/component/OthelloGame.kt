@@ -18,9 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun OthelloGame(language: Language) {
+fun OthelloGame() {
     // Centralized UI state
-    var uiState by remember { mutableStateOf(OthelloGameUiState.initial(language)) }
+    var uiState by remember { mutableStateOf(OthelloGameUiState.initial()) }
 
     Column(
         modifier = Modifier
@@ -61,7 +61,7 @@ fun OthelloGame(language: Language) {
         // Reset button
         Button(
             onClick = {
-                uiState = OthelloGameUiState.initial(uiState.language)
+                uiState = OthelloGameUiState.initial()
             }
         ) {
             Text(if (uiState.language == Language.JAPANESE) "もういちど" else "New Game")
