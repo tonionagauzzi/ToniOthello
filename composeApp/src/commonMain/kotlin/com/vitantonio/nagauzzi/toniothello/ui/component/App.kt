@@ -9,23 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-// Temporary data model for UI (logic will be implemented later)
-enum class CellState {
-    EMPTY,
-    BLACK,
-    WHITE
-}
-
-enum class Player {
-    BLACK,
-    WHITE
-}
-
-enum class Language {
-    JAPANESE,
-    ENGLISH
-}
-
 // Custom pink color scheme with dark pink text
 private val PinkColorScheme = lightColorScheme(
     primary = Color(0xFFFF69B4),           // Hot Pink for buttons

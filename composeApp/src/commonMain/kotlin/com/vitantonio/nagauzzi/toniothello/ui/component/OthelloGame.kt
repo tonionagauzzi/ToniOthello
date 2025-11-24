@@ -17,6 +17,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.vitantonio.nagauzzi.toniothello.ui.state.CellState
+import com.vitantonio.nagauzzi.toniothello.ui.state.Language
+import com.vitantonio.nagauzzi.toniothello.ui.state.Player
 
 @Composable
 fun OthelloGame() {

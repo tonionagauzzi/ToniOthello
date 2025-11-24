@@ -1,9 +1,6 @@
 package com.vitantonio.nagauzzi.toniothello.ui.state
 
 import com.vitantonio.nagauzzi.toniothello.platform.getSystemLanguage
-import com.vitantonio.nagauzzi.toniothello.ui.component.CellState
-import com.vitantonio.nagauzzi.toniothello.ui.component.Language
-import com.vitantonio.nagauzzi.toniothello.ui.component.Player
 
 data class OthelloGameUiState(
     val language: Language,
