@@ -1,12 +1,9 @@
 package com.vitantonio.nagauzzi.toniothello.domain.state
 
 import com.vitantonio.nagauzzi.toniothello.domain.entity.Cell
-import com.vitantonio.nagauzzi.toniothello.domain.entity.Language
 import com.vitantonio.nagauzzi.toniothello.domain.entity.Player
-import com.vitantonio.nagauzzi.toniothello.platform.getSystemLanguage
 
 data class OthelloGameState(
-    val language: Language,
     val board: Array<Array<Cell>>,
     val currentPlayer: Player,
     val isGameOver: Boolean = false
@@ -37,7 +34,6 @@ data class OthelloGameState(
 
         other as OthelloGameState
 
-        if (language != other.language) return false
         if (!board.contentDeepEquals(other.board)) return false
         if (currentPlayer != other.currentPlayer) return false
         if (isGameOver != other.isGameOver) return false
@@ -46,8 +42,7 @@ data class OthelloGameState(
     }
 
     override fun hashCode(): Int {
-        var result = language.hashCode()
-        result = 31 * result + board.contentDeepHashCode()
+        var result = board.contentDeepHashCode()
         result = 31 * result + currentPlayer.hashCode()
         result = 31 * result + isGameOver.hashCode()
         return result
@@ -55,13 +50,7 @@ data class OthelloGameState(
 
     companion object {
         fun initial(): OthelloGameState {
-            val language = if (getSystemLanguage().startsWith("ja")) {
-                Language.JAPANESE
-            } else {
-                Language.ENGLISH
-            }
             return OthelloGameState(
-                language = language,
                 board = Array(8) { Array(8) { Cell.EMPTY } }.apply {
                     // Initial Othello setup
                     this[3][3] = Cell.WHITE
