@@ -24,12 +24,9 @@ data class OthelloGameState(
      */
     val winner: Player?
         get() {
-            val blackCount = board.sumOf { row -> row.count { it == Cell.BLACK } }
-            val whiteCount = board.sumOf { row -> row.count { it == Cell.WHITE } }
-
             return when {
-                blackCount > whiteCount -> Player.BLACK
-                whiteCount > blackCount -> Player.WHITE
+                blackScore > whiteScore -> Player.BLACK
+                whiteScore > blackScore -> Player.WHITE
                 else -> null  // Draw
             }
         }
