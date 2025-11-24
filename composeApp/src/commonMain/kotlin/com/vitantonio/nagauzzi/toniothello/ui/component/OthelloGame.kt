@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,8 +33,18 @@ fun OthelloGame(language: Language) {
         )
     }
     var currentPlayer by remember { mutableStateOf(Player.BLACK) }
-    var blackScore by remember { mutableStateOf(2) }
-    var whiteScore by remember { mutableStateOf(2) }
+
+    // Calculate scores from board state
+    val blackScore by remember {
+        derivedStateOf {
+            board.sumOf { row -> row.count { it == CellState.BLACK } }
+        }
+    }
+    val whiteScore by remember {
+        derivedStateOf {
+            board.sumOf { row -> row.count { it == CellState.WHITE } }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -80,8 +91,6 @@ fun OthelloGame(language: Language) {
                     this[4][4] = CellState.WHITE
                 }
                 currentPlayer = Player.BLACK
-                blackScore = 2
-                whiteScore = 2
             }
         ) {
             Text(if (language == Language.JAPANESE) "もういちど" else "New Game")
