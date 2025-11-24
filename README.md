@@ -1,4 +1,5 @@
 # ToniOthello
+This is an othello game built with Kotlin Multiplatform and Compose Multiplatform.
 
 This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop (JVM).
 
