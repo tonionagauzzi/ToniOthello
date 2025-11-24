@@ -3,7 +3,7 @@ package com.vitantonio.nagauzzi.toniothello.domain.state
 import com.vitantonio.nagauzzi.toniothello.domain.entity.CellState
 import com.vitantonio.nagauzzi.toniothello.domain.entity.Language
 import com.vitantonio.nagauzzi.toniothello.domain.entity.Player
-import com.vitantonio.nagauzzi.toniothello.domain.logic.OthelloGameLogic.getFlippedPositions
+import com.vitantonio.nagauzzi.toniothello.domain.logic.getFlippedPositions
 import com.vitantonio.nagauzzi.toniothello.platform.getSystemLanguage
 
 data class OthelloGameState(
