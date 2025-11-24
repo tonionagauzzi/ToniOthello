@@ -2,6 +2,7 @@ package com.vitantonio.nagauzzi.toniothello.domain.logic
 
 import com.vitantonio.nagauzzi.toniothello.ui.state.CellState
 import com.vitantonio.nagauzzi.toniothello.ui.state.Player
+import com.vitantonio.nagauzzi.toniothello.ui.state.opponent
 
 object OthelloGameLogic {
     private val DIRECTIONS = listOf(
@@ -127,14 +128,9 @@ object OthelloGameLogic {
         return board.sumOf { row -> row.count { it == cellState } }
     }
 
-    // Extension functions for convenience
+    // Extension function for convenience
     private fun Player.toCellState(): CellState = when (this) {
         Player.BLACK -> CellState.BLACK
         Player.WHITE -> CellState.WHITE
-    }
-
-    private fun Player.opponent(): Player = when (this) {
-        Player.BLACK -> Player.WHITE
-        Player.WHITE -> Player.BLACK
     }
 }

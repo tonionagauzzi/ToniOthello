@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.toniothello.domain.logic.OthelloGameLogic
 import com.vitantonio.nagauzzi.toniothello.ui.state.CellState
 import com.vitantonio.nagauzzi.toniothello.ui.state.Player
+import com.vitantonio.nagauzzi.toniothello.ui.state.opponent
 import org.jetbrains.compose.resources.stringResource
 import toniothello.composeapp.generated.resources.Res
 import toniothello.composeapp.generated.resources.new_game
@@ -131,10 +132,4 @@ fun OthelloGame() {
             }
         }
     }
-}
-
-// Extension function for convenience
-private fun Player.opponent(): Player = when (this) {
-    Player.BLACK -> Player.WHITE
-    Player.WHITE -> Player.BLACK
 }
