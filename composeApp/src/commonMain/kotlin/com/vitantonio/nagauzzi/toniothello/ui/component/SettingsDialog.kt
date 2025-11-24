@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -35,30 +35,36 @@ fun SettingsDialog(
         },
         text = {
             Column {
-                // Black AI checkbox
+                // Black AI toggle switch
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Checkbox(
+                    Text(
+                        text = stringResource(Res.string.ai_mode_black),
+                        modifier = Modifier.weight(1f)
+                    )
+                    Switch(
                         checked = isBlackAI,
                         onCheckedChange = onBlackAIChange
                     )
-                    Text(text = stringResource(Res.string.ai_mode_black))
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // White AI checkbox
+                // White AI toggle switch
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Checkbox(
+                    Text(
+                        text = stringResource(Res.string.ai_mode_white),
+                        modifier = Modifier.weight(1f)
+                    )
+                    Switch(
                         checked = isWhiteAI,
                         onCheckedChange = onWhiteAIChange
                     )
-                    Text(text = stringResource(Res.string.ai_mode_white))
                 }
             }
         },
