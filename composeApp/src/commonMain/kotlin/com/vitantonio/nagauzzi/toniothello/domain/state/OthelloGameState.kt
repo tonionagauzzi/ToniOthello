@@ -40,6 +40,7 @@ data class OthelloGameState(
         if (language != other.language) return false
         if (!board.contentDeepEquals(other.board)) return false
         if (currentPlayer != other.currentPlayer) return false
+        if (isGameOver != other.isGameOver) return false
 
         return true
     }
@@ -48,6 +49,7 @@ data class OthelloGameState(
         var result = language.hashCode()
         result = 31 * result + board.contentDeepHashCode()
         result = 31 * result + currentPlayer.hashCode()
+        result = 31 * result + isGameOver.hashCode()
         return result
     }
 
