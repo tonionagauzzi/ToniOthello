@@ -6,7 +6,9 @@ import com.vitantonio.nagauzzi.toniothello.domain.entity.Player
 data class OthelloGameState(
     val board: List<List<Cell>>,
     val currentPlayer: Player,
-    val isGameOver: Boolean = false
+    val isGameOver: Boolean = false,
+    val isBlackAI: Boolean = false,
+    val isWhiteAI: Boolean = false
 ) {
     // Calculate scores from board state
     val blackScore: Int
@@ -26,6 +28,15 @@ data class OthelloGameState(
                 whiteScore > blackScore -> Player.WHITE
                 else -> null  // Draw
             }
+        }
+
+    /**
+     * Returns true if the current player is controlled by AI.
+     */
+    val isCurrentPlayerAI: Boolean
+        get() = when (currentPlayer) {
+            Player.BLACK -> isBlackAI
+            Player.WHITE -> isWhiteAI
         }
 
     companion object {

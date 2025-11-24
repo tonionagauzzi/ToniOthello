@@ -12,6 +12,13 @@
 
     <!-- Game Actions -->
     <string name="new_game">New Game</string>
+    <string name="settings">Settings</string>
+
+    <!-- Settings Dialog -->
+    <string name="settings_title">Game Settings</string>
+    <string name="ai_mode_white">Make White AI</string>
+    <string name="ai_mode_black">Make Black AI</string>
+    <string name="close">Close</string>
 
     <!-- Game Results -->
     <string name="wins_player">%1$s wins!</string>

@@ -12,6 +12,13 @@
 
     <!-- Game Actions -->
     <string name="new_game">もういちど</string>
+    <string name="settings">せってい</string>
+
+    <!-- Settings Dialog -->
+    <string name="settings_title">ゲームせってい</string>
+    <string name="ai_mode_white">しろをAIにする</string>
+    <string name="ai_mode_black">くろをAIにする</string>
+    <string name="close">とじる</string>
 
     <!-- Game Results -->
     <string name="wins_player">%1$s の かち！</string>

@@ -2,15 +2,14 @@ package com.vitantonio.nagauzzi.toniothello.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,15 +20,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.toniothello.domain.logic.makeMove
 import com.vitantonio.nagauzzi.toniothello.ui.state.OthelloGameUiState
-import org.jetbrains.compose.resources.stringResource
-import toniothello.composeapp.generated.resources.Res
-import toniothello.composeapp.generated.resources.new_game
 
 @Composable
 fun OthelloGame() {
     // Centralized UI state
     var uiState by remember { mutableStateOf(OthelloGameUiState.initial()) }
     val snackbarHostState = remember { SnackbarHostState() }
+    var showSettingsDialog by remember { mutableStateOf(false) }
 
     // Check for game over condition
     GameOverEffect(
@@ -40,6 +37,16 @@ fun OthelloGame() {
             uiState = OthelloGameUiState.initial()
         }
     )
+
+    // Check for AI turn
+    if (!showSettingsDialog) {
+        AiTurnEffect(
+            state = uiState.gameState,
+            onNewState = { newState ->
+                uiState = uiState.copy(gameState = newState)
+            }
+        )
+    }
 
     Scaffold(
         snackbarHost = {
@@ -78,14 +85,45 @@ fun OthelloGame() {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Reset button
-            Button(
-                onClick = {
-                    uiState = OthelloGameUiState.initial()
-                }
+            // Buttons row
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text(stringResource(Res.string.new_game))
+                // Reset button
+                ResetButton(
+                    onClick = {
+                        uiState = OthelloGameUiState.initial()
+                    }
+                )
+
+                // Settings button
+                SettingButton(
+                    onClick = {
+                        showSettingsDialog = true
+                    }
+                )
             }
         }
+    }
+
+    // Settings dialog
+    if (showSettingsDialog) {
+        SettingsDialog(
+            isBlackAI = uiState.gameState.isBlackAI,
+            isWhiteAI = uiState.gameState.isWhiteAI,
+            onBlackAIChange = { isAI ->
+                uiState = uiState.copy(
+                    gameState = uiState.gameState.copy(isBlackAI = isAI)
+                )
+            },
+            onWhiteAIChange = { isAI ->
+                uiState = uiState.copy(
+                    gameState = uiState.gameState.copy(isWhiteAI = isAI)
+                )
+            },
+            onDismiss = {
+                showSettingsDialog = false
+            }
+        )
     }
 }
