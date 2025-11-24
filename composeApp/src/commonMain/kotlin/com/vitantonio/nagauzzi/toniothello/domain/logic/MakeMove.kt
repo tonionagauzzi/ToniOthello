@@ -43,9 +43,11 @@ fun makeMove(
     )
 
     // If the next player has no valid moves, skip their turn
-    if (newState.getValidMoves(nextPlayer).isEmpty()) {
+    val nextPlayerMoves = newState.getValidMoves(nextPlayer)
+    if (nextPlayerMoves.isEmpty()) {
         // Check if the current player can continue
-        if (newState.getValidMoves(state.currentPlayer).isNotEmpty()) {
+        val currentPlayerMoves = newState.getValidMoves(state.currentPlayer)
+        if (currentPlayerMoves.isNotEmpty()) {
             val nextPlayer = state.currentPlayer
             return newState.copy(currentPlayer = nextPlayer)
         }
