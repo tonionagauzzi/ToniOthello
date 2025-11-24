@@ -59,7 +59,7 @@ fun OthelloGame(language: Language) {
             onCellClick = { row, col ->
                 // Placeholder click handler (logic will be implemented later)
                 if (board[row][col] == CellState.EMPTY) {
-                    val newBoard = board.map { it.clone() }.toTypedArray()
+                    val newBoard = Array(8) { r -> Array(8) { c -> board[r][c] } }
                     newBoard[row][col] =
                         if (currentPlayer == Player.BLACK) CellState.BLACK else CellState.WHITE
                     board = newBoard
