@@ -22,12 +22,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.toniothello.domain.logic.OthelloGameLogic
-import com.vitantonio.nagauzzi.toniothello.ui.state.CellState
 import com.vitantonio.nagauzzi.toniothello.ui.state.Player
 import com.vitantonio.nagauzzi.toniothello.ui.state.opponent
 import org.jetbrains.compose.resources.stringResource
 import toniothello.composeapp.generated.resources.Res
 import toniothello.composeapp.generated.resources.new_game
+import toniothello.composeapp.generated.resources.wins_player
+import toniothello.composeapp.generated.resources.draw
+import toniothello.composeapp.generated.resources.player_black
+import toniothello.composeapp.generated.resources.player_white
 
 @Composable
 fun OthelloGame() {
@@ -35,26 +38,19 @@ fun OthelloGame() {
     var uiState by remember { mutableStateOf(OthelloGameUiState.initial()) }
     val snackbarHostState = remember { SnackbarHostState() }
 
+    // Get string resources outside of LaunchedEffect
+    val blackWinsMessage = stringResource(Res.string.wins_player, stringResource(Res.string.player_black))
+    val whiteWinsMessage = stringResource(Res.string.wins_player, stringResource(Res.string.player_white))
+    val drawMessage = stringResource(Res.string.draw)
+
     // Check for game over condition
     LaunchedEffect(uiState.board, uiState.currentPlayer) {
         if (OthelloGameLogic.isGameOver(uiState.board)) {
             val winner = OthelloGameLogic.getWinner(uiState.board)
             val message = when (winner) {
-                Player.BLACK -> if (uiState.language == com.vitantonio.nagauzzi.toniothello.ui.state.Language.JAPANESE) {
-                    "くろ の かち！"
-                } else {
-                    "Black wins!"
-                }
-                Player.WHITE -> if (uiState.language == com.vitantonio.nagauzzi.toniothello.ui.state.Language.JAPANESE) {
-                    "しろ の かち！"
-                } else {
-                    "White wins!"
-                }
-                null -> if (uiState.language == com.vitantonio.nagauzzi.toniothello.ui.state.Language.JAPANESE) {
-                    "ひきわけ！"
-                } else {
-                    "It's a draw!"
-                }
+                Player.BLACK -> blackWinsMessage
+                Player.WHITE -> whiteWinsMessage
+                null -> drawMessage
             }
             val result = snackbarHostState.showSnackbar(
                 message = message,

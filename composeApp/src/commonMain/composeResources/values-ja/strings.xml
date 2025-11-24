@@ -12,4 +12,8 @@
 
     <!-- Game Actions -->
     <string name="new_game">もういちど</string>
+
+    <!-- Game Results -->
+    <string name="wins_player">%1$s の かち！</string>
+    <string name="draw">ひきわけ！</string>
 </resources>

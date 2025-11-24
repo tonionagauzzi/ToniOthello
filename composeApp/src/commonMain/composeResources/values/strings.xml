@@ -12,4 +12,8 @@
 
     <!-- Game Actions -->
     <string name="new_game">New Game</string>
+
+    <!-- Game Results -->
+    <string name="wins_player">%1$s wins!</string>
+    <string name="draw">It\'s a draw!</string>
 </resources>
