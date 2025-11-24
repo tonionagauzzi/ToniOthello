@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,31 +19,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun OthelloGame(language: Language) {
-    // Temporary state (will be replaced with actual game logic)
-    var board by remember {
-        mutableStateOf(
-            Array(8) { Array(8) { CellState.EMPTY } }.apply {
-                // Initial Othello setup
-                this[3][3] = CellState.WHITE
-                this[3][4] = CellState.BLACK
-                this[4][3] = CellState.BLACK
-                this[4][4] = CellState.WHITE
-            }
-        )
-    }
-    var currentPlayer by remember { mutableStateOf(Player.BLACK) }
-
-    // Calculate scores from board state
-    val blackScore by remember {
-        derivedStateOf {
-            board.sumOf { row -> row.count { it == CellState.BLACK } }
-        }
-    }
-    val whiteScore by remember {
-        derivedStateOf {
-            board.sumOf { row -> row.count { it == CellState.WHITE } }
-        }
-    }
+    // Centralized UI state
+    var uiState by remember { mutableStateOf(OthelloGameUiState.initial(language)) }
 
     Column(
         modifier = Modifier
@@ -55,26 +31,27 @@ fun OthelloGame(language: Language) {
     ) {
         // Game status
         GameStatus(
-            currentPlayer = currentPlayer,
-            blackScore = blackScore,
-            whiteScore = whiteScore,
-            language = language
+            currentPlayer = uiState.currentPlayer,
+            blackScore = uiState.blackScore,
+            whiteScore = uiState.whiteScore,
+            language = uiState.language
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // Game board
         OthelloBoard(
-            board = board,
+            board = uiState.board,
             onCellClick = { row, col ->
                 // Placeholder click handler (logic will be implemented later)
-                if (board[row][col] == CellState.EMPTY) {
-                    val newBoard = Array(8) { r -> Array(8) { c -> board[r][c] } }
+                if (uiState.board[row][col] == CellState.EMPTY) {
+                    val newBoard = Array(8) { r -> Array(8) { c -> uiState.board[r][c] } }
                     newBoard[row][col] =
-                        if (currentPlayer == Player.BLACK) CellState.BLACK else CellState.WHITE
-                    board = newBoard
-                    currentPlayer =
-                        if (currentPlayer == Player.BLACK) Player.WHITE else Player.BLACK
+                        if (uiState.currentPlayer == Player.BLACK) CellState.BLACK else CellState.WHITE
+                    uiState = uiState.copy(
+                        board = newBoard,
+                        currentPlayer = if (uiState.currentPlayer == Player.BLACK) Player.WHITE else Player.BLACK
+                    )
                 }
             }
         )
@@ -84,16 +61,10 @@ fun OthelloGame(language: Language) {
         // Reset button
         Button(
             onClick = {
-                board = Array(8) { Array(8) { CellState.EMPTY } }.apply {
-                    this[3][3] = CellState.WHITE
-                    this[3][4] = CellState.BLACK
-                    this[4][3] = CellState.BLACK
-                    this[4][4] = CellState.WHITE
-                }
-                currentPlayer = Player.BLACK
+                uiState = OthelloGameUiState.initial(uiState.language)
             }
         ) {
-            Text(if (language == Language.JAPANESE) "もういちど" else "New Game")
+            Text(if (uiState.language == Language.JAPANESE) "もういちど" else "New Game")
         }
     }
 }
