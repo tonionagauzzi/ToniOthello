@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Game Status -->
+    <string name="current_player">Now it\'s %1$s</string>
+
+    <!-- Player Names -->
+    <string name="player_black">Black</string>
+    <string name="player_white">White</string>
+
+    <!-- Score Display -->
+    <string name="score_format">%1$s: %2$d pieces</string>
+
+    <!-- Game Actions -->
+    <string name="new_game">New Game</string>
+</resources>
