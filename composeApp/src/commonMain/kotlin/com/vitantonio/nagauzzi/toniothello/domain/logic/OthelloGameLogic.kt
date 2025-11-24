@@ -3,6 +3,7 @@ package com.vitantonio.nagauzzi.toniothello.domain.logic
 import com.vitantonio.nagauzzi.toniothello.domain.entity.CellState
 import com.vitantonio.nagauzzi.toniothello.domain.entity.Player
 import com.vitantonio.nagauzzi.toniothello.domain.entity.opponent
+import com.vitantonio.nagauzzi.toniothello.domain.state.OthelloGameState
 
 object OthelloGameLogic {
     private val DIRECTIONS = listOf(
@@ -10,16 +11,6 @@ object OthelloGameLogic {
         Pair(0, -1),               Pair(0, 1),   // Left, Right
         Pair(1, -1),  Pair(1, 0),  Pair(1, 1)    // Bottom-left, Bottom, Bottom-right
     )
-
-    /**
-     * Checks if a move is valid for the given player at the specified position.
-     */
-    fun isValidMove(board: Array<Array<CellState>>, row: Int, col: Int, player: Player): Boolean {
-        if (row !in 0..7 || col !in 0..7) return false
-        if (board[row][col] != CellState.EMPTY) return false
-
-        return getFlippedPositions(board, row, col, player).isNotEmpty()
-    }
 
     /**
      * Gets all positions that would be flipped if a piece is placed at the specified position.
@@ -60,16 +51,19 @@ object OthelloGameLogic {
      * Returns a new board with the move applied, or null if the move is invalid.
      */
     fun makeMove(
-        board: Array<Array<CellState>>,
+        state: OthelloGameState,
         row: Int,
-        col: Int,
-        player: Player
-    ): Array<Array<CellState>>? {
-        if (!isValidMove(board, row, col, player)) return null
+        col: Int
+    ): OthelloGameState {
+        val player = state.currentPlayer
 
-        val newBoard = Array(8) { r -> Array(8) { c -> board[r][c] } }
+        if (!state.isValidMove(row = row, col = col, player = player)) {
+            return state
+        }
+
+        val newBoard = Array(size = 8) { r -> Array(size = 8) { c -> state.board[r][c] } }
         val playerCell = player.toCellState()
-        val flippedPositions = getFlippedPositions(board, row, col, player)
+        val flippedPositions = getFlippedPositions(state.board, row, col, player)
 
         // Place the new piece
         newBoard[row][col] = playerCell
@@ -79,45 +73,23 @@ object OthelloGameLogic {
             newBoard[r][c] = playerCell
         }
 
-        return newBoard
-    }
+        // Move was valid, update state
+        val nextPlayer = state.currentPlayer.opponent()
+        val newState = state.copy(
+            board = newBoard,
+            currentPlayer = nextPlayer
+        )
 
-    /**
-     * Gets all valid moves for the given player on the board.
-     */
-    fun getValidMoves(board: Array<Array<CellState>>, player: Player): List<Pair<Int, Int>> {
-        val validMoves = mutableListOf<Pair<Int, Int>>()
-        for (row in 0..7) {
-            for (col in 0..7) {
-                if (isValidMove(board, row, col, player)) {
-                    validMoves.add(Pair(row, col))
-                }
+        // If the next player has no valid moves, skip their turn
+        if (newState.getValidMoves(nextPlayer).isEmpty()) {
+            // Check if the current player can continue
+            if (newState.getValidMoves(state.currentPlayer).isNotEmpty()) {
+                val nextPlayer = state.currentPlayer
+                return newState.copy(currentPlayer = nextPlayer)
             }
         }
-        return validMoves
-    }
 
-    /**
-     * Checks if the game is over (no valid moves for either player).
-     */
-    fun isGameOver(board: Array<Array<CellState>>): Boolean {
-        return getValidMoves(board, Player.BLACK).isEmpty() &&
-               getValidMoves(board, Player.WHITE).isEmpty()
-    }
-
-    /**
-     * Determines the winner based on the piece count.
-     * Returns the winning player, or null if it's a draw.
-     */
-    fun getWinner(board: Array<Array<CellState>>): Player? {
-        val blackCount = board.sumOf { row -> row.count { it == CellState.BLACK } }
-        val whiteCount = board.sumOf { row -> row.count { it == CellState.WHITE } }
-
-        return when {
-            blackCount > whiteCount -> Player.BLACK
-            whiteCount > blackCount -> Player.WHITE
-            else -> null  // Draw
-        }
+        return newState
     }
 
     /**

@@ -1,7 +1,7 @@
 package com.vitantonio.nagauzzi.toniothello.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
-import com.vitantonio.nagauzzi.toniothello.ui.state.OthelloGameUiState
+import com.vitantonio.nagauzzi.toniothello.domain.state.OthelloGameState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.toniothello.domain.logic.OthelloGameLogic
 import com.vitantonio.nagauzzi.toniothello.domain.entity.Player
-import com.vitantonio.nagauzzi.toniothello.domain.entity.opponent
 import org.jetbrains.compose.resources.stringResource
 import toniothello.composeapp.generated.resources.Res
 import toniothello.composeapp.generated.resources.new_game
@@ -35,7 +34,7 @@ import toniothello.composeapp.generated.resources.player_white
 @Composable
 fun OthelloGame() {
     // Centralized UI state
-    var uiState by remember { mutableStateOf(OthelloGameUiState.initial()) }
+    var state by remember { mutableStateOf(OthelloGameState.initial()) }
     val snackbarHostState = remember { SnackbarHostState() }
 
     // Get string resources outside of LaunchedEffect
@@ -44,9 +43,9 @@ fun OthelloGame() {
     val drawMessage = stringResource(Res.string.draw)
 
     // Check for game over condition
-    LaunchedEffect(uiState.board, uiState.currentPlayer) {
-        if (OthelloGameLogic.isGameOver(uiState.board)) {
-            val winner = OthelloGameLogic.getWinner(uiState.board)
+    LaunchedEffect(state.board, state.currentPlayer) {
+        if (state.isGameOver) {
+            val winner = state.getWinner()
             val message = when (winner) {
                 Player.BLACK -> blackWinsMessage
                 Player.WHITE -> whiteWinsMessage
@@ -58,7 +57,7 @@ fun OthelloGame() {
                 withDismissAction = true
             )
             // Reset game after user dismisses the snackbar
-            uiState = OthelloGameUiState.initial()
+            state = OthelloGameState.initial()
         }
     }
 
@@ -77,42 +76,19 @@ fun OthelloGame() {
         ) {
             // Game status
             GameStatus(
-                currentPlayer = uiState.currentPlayer,
-                blackScore = uiState.blackScore,
-                whiteScore = uiState.whiteScore
+                currentPlayer = state.currentPlayer,
+                blackScore = state.blackScore,
+                whiteScore = state.whiteScore
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             // Game board
             OthelloBoard(
-                board = uiState.board,
+                board = state.board,
                 onCellClick = { row, col ->
                     // Use game logic to make a move
-                    val newBoard = OthelloGameLogic.makeMove(
-                        uiState.board,
-                        row,
-                        col,
-                        uiState.currentPlayer
-                    )
-
-                    if (newBoard != null) {
-                        // Move was valid, update state
-                        var nextPlayer = uiState.currentPlayer.opponent()
-
-                        // If the next player has no valid moves, skip their turn
-                        if (OthelloGameLogic.getValidMoves(newBoard, nextPlayer).isEmpty()) {
-                            // Check if the current player can continue
-                            if (OthelloGameLogic.getValidMoves(newBoard, uiState.currentPlayer).isNotEmpty()) {
-                                nextPlayer = uiState.currentPlayer
-                            }
-                        }
-
-                        uiState = uiState.copy(
-                            board = newBoard,
-                            currentPlayer = nextPlayer
-                        )
-                    }
+                    state = OthelloGameLogic.makeMove(state = state, row = row, col = col)
                 }
             )
 
@@ -121,7 +97,7 @@ fun OthelloGame() {
             // Reset button
             Button(
                 onClick = {
-                    uiState = OthelloGameUiState.initial()
+                    state = OthelloGameState.initial()
                 }
             ) {
                 Text(stringResource(Res.string.new_game))

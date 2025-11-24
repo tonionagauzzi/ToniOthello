@@ -1,11 +1,12 @@
-package com.vitantonio.nagauzzi.toniothello.ui.state
+package com.vitantonio.nagauzzi.toniothello.domain.state
 
 import com.vitantonio.nagauzzi.toniothello.domain.entity.CellState
 import com.vitantonio.nagauzzi.toniothello.domain.entity.Language
 import com.vitantonio.nagauzzi.toniothello.domain.entity.Player
+import com.vitantonio.nagauzzi.toniothello.domain.logic.OthelloGameLogic.getFlippedPositions
 import com.vitantonio.nagauzzi.toniothello.platform.getSystemLanguage
 
-data class OthelloGameUiState(
+data class OthelloGameState(
     val language: Language,
     val board: Array<Array<CellState>>,
     val currentPlayer: Player
@@ -17,11 +18,54 @@ data class OthelloGameUiState(
     val whiteScore: Int
         get() = board.sumOf { row -> row.count { it == CellState.WHITE } }
 
+    /**
+     * Checks if a move is valid for the given player at the specified position.
+     */
+    fun isValidMove(row: Int, col: Int, player: Player): Boolean {
+        if (row !in 0..7 || col !in 0..7) return false
+        if (board[row][col] != CellState.EMPTY) return false
+
+        return getFlippedPositions(board, row, col, player).isNotEmpty()
+    }
+
+    /**
+     * Gets all valid moves for the given player on the board.
+     */
+    fun getValidMoves(player: Player): List<Pair<Int, Int>> {
+        val validMoves = mutableListOf<Pair<Int, Int>>()
+        for (row in 0..7) {
+            for (col in 0..7) {
+                if (isValidMove(row, col, player)) {
+                    validMoves.add(Pair(row, col))
+                }
+            }
+        }
+        return validMoves
+    }
+
+    val isGameOver: Boolean
+        get() = getValidMoves(Player.BLACK).isEmpty() && getValidMoves(Player.WHITE).isEmpty()
+
+    /**
+     * Determines the winner based on the piece count.
+     * Returns the winning player, or null if it's a draw.
+     */
+    fun getWinner(): Player? {
+        val blackCount = board.sumOf { row -> row.count { it == CellState.BLACK } }
+        val whiteCount = board.sumOf { row -> row.count { it == CellState.WHITE } }
+
+        return when {
+            blackCount > whiteCount -> Player.BLACK
+            whiteCount > blackCount -> Player.WHITE
+            else -> null  // Draw
+        }
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || this::class != other::class) return false
 
-        other as OthelloGameUiState
+        other as OthelloGameState
 
         if (language != other.language) return false
         if (!board.contentDeepEquals(other.board)) return false
@@ -37,14 +81,14 @@ data class OthelloGameUiState(
         return result
     }
 
-    companion object {
-        fun initial(): OthelloGameUiState {
+    companion object Companion {
+        fun initial(): OthelloGameState {
             val language = if (getSystemLanguage().startsWith("ja")) {
                 Language.JAPANESE
             } else {
                 Language.ENGLISH
             }
-            return OthelloGameUiState(
+            return OthelloGameState(
                 language = language,
                 board = Array(8) { Array(8) { CellState.EMPTY } }.apply {
                     // Initial Othello setup
