@@ -8,8 +8,12 @@
     <string name="player_white">しろ</string>
 
     <!-- Score Display -->
-    <string name="score_format">%1$s は %2$d 個</string>
+    <string name="score_format">%1$s は %2$d こ</string>
 
     <!-- Game Actions -->
     <string name="new_game">もういちど</string>
+
+    <!-- Game Results -->
+    <string name="wins_player">%1$s の かち！</string>
+    <string name="draw">ひきわけ！</string>
 </resources>
