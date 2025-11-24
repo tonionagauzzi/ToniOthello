@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Game Status -->
+    <string name="current_player">いまは %1$s だよ</string>
+
+    <!-- Player Names -->
+    <string name="player_black">くろ</string>
+    <string name="player_white">しろ</string>
+
+    <!-- Score Display -->
+    <string name="score_format">%1$s は %2$d 個</string>
+
+    <!-- Game Actions -->
+    <string name="new_game">もういちど</string>
+</resources>

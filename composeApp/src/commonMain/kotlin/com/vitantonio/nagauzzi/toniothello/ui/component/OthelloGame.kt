@@ -18,8 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.toniothello.ui.state.CellState
-import com.vitantonio.nagauzzi.toniothello.ui.state.Language
 import com.vitantonio.nagauzzi.toniothello.ui.state.Player
+import org.jetbrains.compose.resources.stringResource
+import toniothello.composeapp.generated.resources.Res
+import toniothello.composeapp.generated.resources.new_game
 
 @Composable
 fun OthelloGame() {
@@ -37,8 +39,7 @@ fun OthelloGame() {
         GameStatus(
             currentPlayer = uiState.currentPlayer,
             blackScore = uiState.blackScore,
-            whiteScore = uiState.whiteScore,
-            language = uiState.language
+            whiteScore = uiState.whiteScore
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -68,7 +69,7 @@ fun OthelloGame() {
                 uiState = OthelloGameUiState.initial()
             }
         ) {
-            Text(if (uiState.language == Language.JAPANESE) "もういちど" else "New Game")
+            Text(stringResource(Res.string.new_game))
         }
     }
 }

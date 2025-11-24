@@ -17,10 +17,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.vitantonio.nagauzzi.toniothello.ui.state.Language
+import org.jetbrains.compose.resources.stringResource
+import toniothello.composeapp.generated.resources.Res
+import toniothello.composeapp.generated.resources.score_format
 
 @Composable
-fun ScoreDisplay(label: String, score: Int, color: Color, language: Language) {
+fun ScoreDisplay(label: String, score: Int, color: Color) {
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -33,11 +35,7 @@ fun ScoreDisplay(label: String, score: Int, color: Color, language: Language) {
         )
         Spacer(modifier = Modifier.size(8.dp))
         Text(
-            text = if (language == Language.JAPANESE) {
-                "$label は $score 個"
-            } else {
-                "$label: $score pieces"
-            },
+            text = stringResource(Res.string.score_format, label, score),
             fontSize = 16.sp,
             fontWeight = FontWeight.Medium,
             color = MaterialTheme.colorScheme.onPrimaryContainer

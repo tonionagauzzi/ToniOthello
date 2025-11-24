@@ -18,15 +18,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.vitantonio.nagauzzi.toniothello.ui.state.Language
 import com.vitantonio.nagauzzi.toniothello.ui.state.Player
+import org.jetbrains.compose.resources.stringResource
+import toniothello.composeapp.generated.resources.Res
+import toniothello.composeapp.generated.resources.current_player
+import toniothello.composeapp.generated.resources.player_black
+import toniothello.composeapp.generated.resources.player_white
 
 @Composable
 fun GameStatus(
     currentPlayer: Player,
     blackScore: Int,
-    whiteScore: Int,
-    language: Language
+    whiteScore: Int
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -40,19 +43,16 @@ fun GameStatus(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = if (language == Language.JAPANESE) {
-                    if (currentPlayer == Player.BLACK) {
-                        "いまは くろ だよ"
-                    } else {
-                        "いまは しろ だよ"
-                    }
-                } else {
-                    if (currentPlayer == Player.BLACK) {
-                        "Now it's Black"
-                    } else {
-                        "Now it's White"
-                    }
-                },
+                text = stringResource(
+                    Res.string.current_player,
+                    stringResource(
+                        if (currentPlayer == Player.BLACK) {
+                            Res.string.player_black
+                        } else {
+                            Res.string.player_white
+                        }
+                    )
+                ),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onPrimaryContainer
@@ -65,16 +65,14 @@ fun GameStatus(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 ScoreDisplay(
-                    label = if (language == Language.JAPANESE) "くろ" else "Black",
+                    label = stringResource(Res.string.player_black),
                     score = blackScore,
-                    color = Color.Black,
-                    language = language
+                    color = Color.Black
                 )
                 ScoreDisplay(
-                    label = if (language == Language.JAPANESE) "しろ" else "White",
+                    label = stringResource(Res.string.player_white),
                     score = whiteScore,
-                    color = Color.White,
-                    language = language
+                    color = Color.White
                 )
             }
         }
