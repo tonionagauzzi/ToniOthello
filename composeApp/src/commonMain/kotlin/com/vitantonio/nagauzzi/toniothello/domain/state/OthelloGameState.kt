@@ -81,7 +81,7 @@ data class OthelloGameState(
         return result
     }
 
-    companion object Companion {
+    companion object {
         fun initial(): OthelloGameState {
             val language = if (getSystemLanguage().startsWith("ja")) {
                 Language.JAPANESE
