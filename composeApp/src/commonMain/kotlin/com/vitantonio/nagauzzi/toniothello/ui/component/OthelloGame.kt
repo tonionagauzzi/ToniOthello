@@ -19,7 +19,7 @@ import com.vitantonio.nagauzzi.toniothello.ui.component.Language
 import com.vitantonio.nagauzzi.toniothello.ui.component.Player
 
 @Composable
-fun OthelloGame() {
+fun OthelloGame(language: Language) {
     // Temporary state (will be replaced with actual game logic)
     var board by remember {
         mutableStateOf(
@@ -35,7 +35,6 @@ fun OthelloGame() {
     var currentPlayer by remember { mutableStateOf(Player.BLACK) }
     var blackScore by remember { mutableStateOf(2) }
     var whiteScore by remember { mutableStateOf(2) }
-    var language by remember { mutableStateOf(Language.JAPANESE) }
 
     Column(
         modifier = Modifier
@@ -44,18 +43,6 @@ fun OthelloGame() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // Language toggle button
-        Button(
-            onClick = {
-                language =
-                    if (language == Language.JAPANESE) Language.ENGLISH else Language.JAPANESE
-            }
-        ) {
-            Text(if (language == Language.JAPANESE) "English" else "日本語")
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
         // Game status
         GameStatus(
             currentPlayer = currentPlayer,
