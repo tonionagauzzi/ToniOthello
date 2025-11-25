@@ -1,6 +1,8 @@
 # ToniOthello
 This is an othello game built with Kotlin Multiplatform and Compose Multiplatform.
 
+<img width="108" height="240" alt="Screenshot_20251125_103320" src="https://github.com/user-attachments/assets/a89dcea2-78ec-4b01-9a3e-d39be7064eb4" /> <img width="108" height="240" alt="Screenshot_20251125_103326" src="https://github.com/user-attachments/assets/56531003-ee75-43d8-859e-1751bb75cf23" />
+
 This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop (JVM).
 
 * [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
